@@ -25,42 +25,34 @@ public class BubbleSortingDaoImplementation implements BubbleSortingDaoInterface
     PreparedStatement pst = null;
 
     @Override
-    public boolean insert(NumberPojo numberPojo) throws SQLException {
-
+    public boolean insertNumber(NumberPojo numberPojo) throws SQLException {
         try {
             con = database.connection.DatabaseConnection.getConnection();
             pst = con.prepareStatement("INSERT INTO BubbleNumber"
                     + "(number)"
                     + " VALUES(?)", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-
             pst.setInt(1, numberPojo.getNumber());
             pst.executeUpdate();
 
             return true;
-
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
-
         }
     }
 
     @Override
-    public ArrayList<NumberPojo> retrieveNumbers() {
-
+    public ArrayList<NumberPojo> selectAllNumbers() {
         ArrayList<NumberPojo> allNumbers = new ArrayList<>();
-
         try (Connection connection = database.connection.DatabaseConnection.getConnection()) {
             con = database.connection.DatabaseConnection.getConnection();
             pst = con.prepareStatement("SELECT * FROM bubblenumber");
             ResultSet resultSet = pst.executeQuery();
-
             while (resultSet.next()) {
                 NumberPojo myNumber = new NumberPojo();
                 myNumber.setId(resultSet.getInt(1));
                 myNumber.setNumber(resultSet.getInt(2));
                 allNumbers.add(myNumber);
-
             }
             
             //Bubble Sorting
@@ -73,13 +65,10 @@ public class BubbleSortingDaoImplementation implements BubbleSortingDaoInterface
                     }
                 }
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(BubbleSortingDaoImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-
         return allNumbers;
-
     }
-
 }

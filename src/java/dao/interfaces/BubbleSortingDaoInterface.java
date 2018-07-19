@@ -15,7 +15,7 @@ import pojo.NumberPojo;
  */
 public interface BubbleSortingDaoInterface {
 
-    public boolean insert(NumberPojo numberPojo) throws SQLException;
-    public ArrayList<NumberPojo> retrieveNumbers();
+    public boolean insertNumber(NumberPojo numberPojo) throws SQLException;
+    public ArrayList<NumberPojo> selectAllNumbers();
 
     }
